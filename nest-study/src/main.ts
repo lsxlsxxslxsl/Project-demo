@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as express from 'express';
 // import * as ejsMate from 'ejs-mate';
 // import * as loaderConnect from 'loader-connect';
@@ -16,6 +17,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: isDevelopment ? new Logger() : false,
   });
+
   app.use(express.json()); // For parsing application/json
   app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
   // 监听所有的请求路由，并打印日志
@@ -27,6 +29,17 @@ async function bootstrap() {
   app.useGlobalFilters(new AnyExceptionsFilter());
   // 过滤处理 HTTP 异常
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  // 配置 Swagger
+  const options = new DocumentBuilder()
+    .addBearerAuth() // 开启 BearerAuth 授权认证
+    .setTitle('Nest study')
+    .setDescription('The nest-study API description')
+    .setVersion('1.0')
+    .addTag('test')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api-doc', app, document);
   // // 获取根目录 nest-cnode
   // const rootDir = join(__dirname, '..');
 
@@ -44,6 +57,6 @@ async function bootstrap() {
   // // 配置模板（视图）的基本目录
   // app.setBaseViewsDir(join(rootDir, 'views'));
 
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
