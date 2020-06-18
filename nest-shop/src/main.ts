@@ -1,9 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import * as cookieParser from 'cookie-parser';
+import * as session from 'express-session';
+import * as loaderConnect from 'loader-connect';
 import { join } from 'path';
 import * as swig from 'swig';
-import * as loaderConnect from 'loader-connect';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const isDevelopment = process.env.NODE_ENV === 'development';
@@ -27,6 +29,18 @@ async function bootstrap() {
   app.setBaseViewsDir(join(rootDir, 'views'));
   swig.setDefaults({ cache: false });
 
-  await app.listen(3000);
+  //配置cookie中间件
+  app.use(cookieParser('this signed cookies'));
+
+  //配置session的中间件
+  app.use(
+    session({
+      secret: 'keyboard cat',
+      cookie: { maxAge: 9000, httpOnly: true },
+      rolling: true,
+    }),
+  );
+
+  await app.listen(3001);
 }
 bootstrap();
