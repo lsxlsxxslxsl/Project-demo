@@ -18,7 +18,7 @@ async function bootstrap() {
   }
 
   app.useStaticAssets(join(rootDir, 'public'), {
-    prefix: '/static/',
+    // prefix: '/static/',
   });
 
   // 指定视图引擎 处理.html后缀文件

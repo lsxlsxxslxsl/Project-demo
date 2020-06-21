@@ -1,4 +1,10 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Render } from '@nestjs/common';
 
 @Controller('login')
-export class LoginController {}
+export class LoginController {
+  @Get()
+  @Render('admin/login')
+  index() {
+    return {};
+  }
+}
