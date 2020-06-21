@@ -1,24 +1,22 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { InitMiddleware } from './middleware/init.middleware';
-import { UploadController } from './upload/upload.controller';
-import { UploadmanyController } from './uploadmany/uploadmany.controller';
+import { AdminModule } from './module/admin/admin.module';
+import { ApiModule } from './module/api/api.module';
+import { IndexController } from './module/defalut/index/index.controller';
+import { DefaultModule } from './module/default/default.module';
+
+//配置数据库连接
 
 @Module({
-  imports: [],
-  controllers: [AppController, UploadController, UploadmanyController],
+  imports: [
+    AdminModule,
+    ApiModule,
+    DefaultModule,
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/nest'),
+  ],
+  controllers: [AppController, IndexController],
   providers: [AppService],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(InitMiddleware)
-      .forRoutes({ path: '*', method: RequestMethod.ALL });
-  }
-}
+export class AppModule {}
