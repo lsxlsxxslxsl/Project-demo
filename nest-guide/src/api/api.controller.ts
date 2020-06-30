@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   InternalServerErrorException,
   Param,
   Post,
@@ -11,6 +12,13 @@ import {
   UseGuards,
   UsePipes
 } from '@nestjs/common';
+import {
+  ApiBasicAuth, ApiBearerAuth,
+  ApiBody,
+  ApiHeader,
+
+  ApiOperation, ApiTags
+} from '@nestjs/swagger';
 import { EnvService } from '../config/env.service';
 import { AuthGuard } from '../guard/auth.guard';
 import { ValidationPipe } from '../pipe/validation.pipe';
@@ -23,13 +31,26 @@ const user = {
   gender: 'male',
 };
 
+@ApiHeader({
+  name: 'Authorization',
+  description: 'Auth token',
+})
+@ApiBasicAuth()
+@ApiBearerAuth()
+@ApiTags('资源升级')
 @Controller('client')
 @UseGuards(new AuthGuard())
 export class ApiController {
   constructor(private readonly config: EnvService) {}
 
   @Post()
+  @ApiOperation({summary:'创建API'})
   @UsePipes(new ValidationPipe())
+  @HttpCode(200)
+  @ApiBody({
+    description: '创建API',
+    type: CreateApiDTO,
+  })
   async create(@Body() createApi: CreateApiDTO) {
     // throw new InternalServerErrorException()
     return {
