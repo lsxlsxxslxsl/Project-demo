@@ -9,19 +9,18 @@ import {
   Post,
   Put,
   Query,
-  UseGuards,
-  UsePipes
+  UseGuards
 } from '@nestjs/common';
 import {
-  ApiBasicAuth, ApiBearerAuth,
+  ApiBasicAuth,
+  ApiBearerAuth,
   ApiBody,
   ApiHeader,
-
-  ApiOperation, ApiTags
+  ApiOperation,
+  ApiTags
 } from '@nestjs/swagger';
 import { EnvService } from '../config/env.service';
 import { AuthGuard } from '../guard/auth.guard';
-import { ValidationPipe } from '../pipe/validation.pipe';
 import { CreateApiDTO } from './dto/api.dto';
 
 export class UpdateCatDto {
@@ -37,22 +36,22 @@ const user = {
 })
 @ApiBasicAuth()
 @ApiBearerAuth()
-@ApiTags('资源升级')
+@ApiTags('example')
 @Controller('client')
 @UseGuards(new AuthGuard())
 export class ApiController {
   constructor(private readonly config: EnvService) {}
 
   @Post()
-  @ApiOperation({summary:'创建API'})
-  @UsePipes(new ValidationPipe())
-  @HttpCode(200)
+  @ApiOperation({ summary: '创建API' })
   @ApiBody({
     description: '创建API',
     type: CreateApiDTO,
   })
+  @HttpCode(200)
   async create(@Body() createApi: CreateApiDTO) {
     // throw new InternalServerErrorException()
+    // throw new Error('Very Bad Error');
     return {
       name: createApi.name,
       age: createApi.age,

@@ -21,6 +21,7 @@ export class EnvService {
         .default('development'),
       PORT: Joi.number().default(3000),
       HOST: Joi.string().default('127.0.0.1'),
+      BASE_URL: Joi.string(),
     });
 
     const { error, value: validatedEnvConfig } = Joi.validate(
@@ -41,5 +42,10 @@ export class EnvService {
   // 端口号
   get port(): number {
     return Number(this.envConfig.PORT);
+  }
+
+  // 请求地址
+  get baseUrl(): string {
+    return String(this.envConfig.BASE_URL);
   }
 }
