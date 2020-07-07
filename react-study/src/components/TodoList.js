@@ -1,7 +1,12 @@
 import 'antd/dist/antd.css';
 import React, { Component } from 'react';
 import store from '../store';
-import { addTodoAction, changeInputAction, deleteTodoAction, getTodoList } from '../store/action';
+import {
+  addTodoAction,
+  changeInputAction,
+  deleteTodoAction,
+  getMyListAction
+} from '../store/action';
 import TodoListUI from './TodoListUI';
 
 class TodoList extends Component {
@@ -28,7 +33,8 @@ class TodoList extends Component {
   }
 
   componentDidMount() {
-    store.dispatch(getTodoList())
+    const action = getMyListAction();
+    store.dispatch(action);
   }
 
   changeInputValue(e) {

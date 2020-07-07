@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_TODO, CHANGE_INPUT, DELETE_TODO, GET_LIST } from './actionTypes';
+import { ADD_TODO, CHANGE_INPUT, DELETE_TODO, GET_LIST, GET_MY_LIST } from './actionTypes';
 
 export const changeInputAction = (value) => ({
   type: CHANGE_INPUT,
@@ -19,6 +19,10 @@ export const getListAction = (data) => ({
   type: GET_LIST,
   data
 });
+
+export const getMyListAction = ()=>({
+  type:GET_MY_LIST
+})
 
 export const getTodoList = () => {
   return async (dispatch) => {

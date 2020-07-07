@@ -1,8 +1,8 @@
-import { ADD_TODO, CHANGE_INPUT, DELETE_TODO, GET_LIST } from './actionTypes';
+import { ADD_TODO, CHANGE_INPUT, DELETE_TODO, GET_LIST, GET_MY_LIST } from './actionTypes';
 
 const defaultState = {
   inputValue: 'Write Something',
-  list: ['早上4点起床，锻炼身体', '中午下班游泳一小时']
+  list: []
 };
 export default (state = defaultState, action) => {
   if (action.type === CHANGE_INPUT) {
@@ -22,6 +22,11 @@ export default (state = defaultState, action) => {
     return newState;
   }
   if (action.type === GET_LIST) {
+    let newState = JSON.parse(JSON.stringify(state));
+    newState.list = action.data.list;
+    return newState;
+  }
+  if (action.type === GET_MY_LIST) {
     let newState = JSON.parse(JSON.stringify(state));
     newState.list = action.data.list;
     return newState;
