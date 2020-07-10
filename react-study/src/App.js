@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './App.css';
 import CompA from './components/CompA';
 import CompB from './components/CompB';
 import Error from './components/Error';
