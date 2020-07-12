@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import TodoList from './components/TodoList';
-// import TodoListNew from './components/TodoListNew';
-import CompRouter from './components/CompRouter';
 // import './index.css';
+import AppRouter from './AppRouter';
 
 ReactDOM.render(
   // <React.StrictMode>
@@ -12,6 +10,6 @@ ReactDOM.render(
   //   </Provider>
   // </React.StrictMode>,
 
-  <CompRouter />,
+  <AppRouter />,
   document.getElementById('root')
 );
