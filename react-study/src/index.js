@@ -12,7 +12,6 @@ import ReactDOM from 'react-dom';
 import Example7 from './example4/index';
 
 
-// import './index.css';
 
 ReactDOM.render(
   // <React.StrictMode>
