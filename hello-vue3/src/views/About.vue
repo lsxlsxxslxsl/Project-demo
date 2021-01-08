@@ -39,7 +39,15 @@
 //     return { state };
 //   },
 // }
-import { defineComponent, toRefs, onErrorCaptured } from 'vue';
+import {
+    defineComponent,
+    toRefs,
+    onErrorCaptured,
+    watchEffect,
+    ref,
+    watch,
+    onMounted,
+} from 'vue';
 import useUserRepositories from '../composables/useUserRepositories';
 import useRepositoryNameSearch from '../composables/useRepositoryNameSearch';
 import GirlShow from '../components/AsyncShow.vue';
@@ -58,6 +66,29 @@ export default defineComponent({
         onErrorCaptured((err) => {
             console.error('err', err);
             return false;
+        });
+
+        const count = ref(0);
+        const str = '123';
+        const stop = watchEffect(() => {
+            console.error('响应式追踪', str, count.value);
+        });
+
+        const stopWatch = watch(count, (val, old) => {
+            console.error('监听变化', val, old);
+        });
+
+        setInterval(() => {
+            count.value += 1;
+            // -> 打印出 1
+            if (count.value >= 5) {
+                stop();
+                stopWatch();
+            }
+        }, 1000);
+
+        onMounted(() => {
+            console.error('onMounted', count.value);
         });
 
         return {
